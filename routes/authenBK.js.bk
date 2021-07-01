@@ -1,0 +1,87 @@
+var express = require('express');
+var router = express.Router();
+const db = require("../database/database");
+//const path = require("path");
+const bcrypt = require("bcrypt");
+const { check, validationResult } = require("express-validator");
+const myfunction = require("./myfunction");
+
+
+
+/* GET home page. */
+
+router.get('/', myfunction.ifNotLoggedIn, function(req, res, next) {
+  res.send("you are logined")
+  // db.query(`SELECT * FROM persons`,(err, result)=>{
+  //   if(err) res.send(err);
+  //   else res.send(result)
+  // });  
+  //res.render('index', { title: 'Express Lockdoor' });
+  //res.send()
+}); 
+
+router.post('/', myfunction.ifLoggedIn, [
+  check('email', 'Invalid Email').isEmail(),
+  check('password', 'Password wrong').trim().not().isEmpty()
+],
+function(req, res, next){
+  const validation_result = validationResult(req);
+  if(validation_result.isEmpty()){
+    //console.log("body is ", req.body)
+    //const {email, password} = req.body;    
+    db.query('SELECT * FROM authen WHERE email = ?', [req.body.email],
+      function(error, result){
+        if(error) throw error;
+        if(result.length === 1){
+          console.log(result[0].password)
+          bcrypt.compare(req.body.password, result[0].password)
+            .then(compare_result=>{
+              if(compare_result === true){
+                req.session.isLoggedIn = true;
+                req.session.user_id = result[0].user_id;
+                res.json(result)
+              }else{res.send('wrong password')}
+            })
+            .catch(err=>{if(err)throw err})
+        }else res.send('ไม่มีข้อมูล')
+      })
+  }else res.json(validation_result.errors)
+})
+
+
+router.get('/register', function(req, res, next){
+  res.send('register page')
+})
+
+router.post('/register', 
+  myfunction.ifLoggedIn,
+  [
+    check('email', "Invalid Email Address!").isEmail().custom(async(email)=>{      
+      const value = await myfunction.isEmailInUse(email);
+      if (value) {
+        throw new Error('Email is already exists!!!');
+      }
+      return true;   
+    }),
+    check('password', "Incorrect Password!!").trim().isLength({min: 6})     
+  ],
+  (req, res, next)=>{
+    const validation_result = validationResult(req);
+    const {email, password} = req.body;
+    if(validation_result.isEmpty()){       
+      bcrypt.hash(password, 12).then(hash_pass=>{
+        db.query(`INSERT INTO authen(email, password) VALUE(?, ?)`, [email, hash_pass],
+          function(error, result){
+            if(error) throw error
+            res.json(result)
+          })
+      })       
+    }
+    else res.json(validation_result.errors)   
+  }
+);
+
+
+
+
+module.exports = router;
