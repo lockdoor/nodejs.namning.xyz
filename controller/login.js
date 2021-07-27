@@ -11,7 +11,7 @@ exports.loginController = (req, res, next)=>{
         return bcrypt.compare(password, row[0].password)
           .then((result)=>{
             if(!result){
-              res.status(401).json({message: 'Authentication failed'})
+              res.status(401).json({message: 'Authentication failed Password wrong'})
             }else{
               const privateKey = fs.readFileSync(__dirname+'/private.key')
               let jwtToken = jwt.sign({
@@ -21,7 +21,11 @@ exports.loginController = (req, res, next)=>{
                 },
               privateKey,
               {expiresIn: '1h'}
-              )
+              );
+              // res.setHeader('Access-Control-Allow-Origin', '*');
+              // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+              // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+              // res.setHeader('Access-Control-Allow-Credentials', true);
               res.status(200).json({token: jwtToken, expiresIn: 3600})
             }
           })
@@ -29,7 +33,7 @@ exports.loginController = (req, res, next)=>{
             res.status(401).json({message: 'Authenticatioin failed',error: error})
           })
       }else{
-        res.status(401).json({message: 'Authentication failed'})
+        res.status(401).json({message: 'Authentication failed Email Wrong!'})
       }
     })
     .catch((error)=>{
