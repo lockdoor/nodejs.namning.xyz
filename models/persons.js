@@ -4,7 +4,7 @@ class PersonsModel{
   personID; nickname; citizenID; phoneNumber; share; bankAccout; fname; lname;
 
   static findAllPersons(){
-    return db.execute('SELECT * FROM Persons')
+    return db.execute('SELECT * FROM persons')
   }
 
   static findByCitizenID(citizenID){
