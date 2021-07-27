@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
  const fs = require('fs')
+ const privateKey = fs.readFileSync(__dirname+'/private.key')
+
 const authorization = ((req, res, next)=>{
   const authorization = req.headers['authorization']
   if(authorization === undefined) {
@@ -11,7 +13,7 @@ const authorization = ((req, res, next)=>{
     return res.status(401).json({status:401, message: 'Unauthorization', error: 'token undefined'})
   }
   
-  const privateKey = fs.readFileSync(__dirname+'/private.key')
+  //const privateKey = fs.readFileSync(__dirname+'/private.key')
   jwt.verify(token, privateKey, function(error, decoded){
     if(error){
       return res.status(401).json({status:401, message: 'Unauthorization', error: 'token don,t match'})
