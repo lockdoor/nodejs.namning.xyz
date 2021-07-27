@@ -24,8 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // lockdoor
 
-app.use('/api',authorization, apiRouter);
-//app.use('/api', apiRouter);
+//app.use('/api',authorization, apiRouter);
+app.use('/api', apiRouter);
 app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler

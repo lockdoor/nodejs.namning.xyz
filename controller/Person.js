@@ -142,7 +142,7 @@ exports.findAllbankName = async(req, res, next)=>{
 
 exports.findAllPersons = async(req, res, next)=>{
   await PersonsModel.findAllPersons()
-    .then(([row])=>{res.json(row)})
+    .then(([row])=>{res.status(200).json(row)})
     .catch((error)=>console.log(error));
 }
 
