@@ -146,18 +146,18 @@ exports.findAllPersons = async(req, res, next)=>{
     .catch((error)=>console.log(error));
 }
 
-exports.findAdmin = async(req, res, next)=>{
-  await PersonsModel.findAdmin()
-  .then(([row])=>{
-    console.log('find admin work')
-    if(row.length == 0){
-      console.log("Admin not found")
-      return res.status(204).json({"message": "Admin not found"})
-    }else{
-      console.log("admin is", row[0].nickname)
-      return res.status(200).json(row[0])}})
-  .catch((error)=>console.log(error));
-}
+// exports.findAdmin = async(req, res, next)=>{
+//   await PersonsModel.findAdmin()
+//   .then(([row])=>{
+//     console.log('find admin work')
+//     if(row.length == 0){
+//       console.log("Admin not found")
+//       return res.status(204).json({"message": "Admin not found"})
+//     }else{
+//       console.log("admin is", row[0].nickname)
+//       return res.status(200).json(row[0])}})
+//   .catch((error)=>console.log(error));
+// }
 
 exports.setAdmin = async(req, res, next)=>{
   let adminNew = req.body
