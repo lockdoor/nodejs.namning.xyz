@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const Person = require('../controller/Person');
+const Person = require('../controller/person');
 const Share = require('../controller/share');
 const SharesPersons = require('../controller/sharesPersons')
 //const SharesModel = require('../models/share');
