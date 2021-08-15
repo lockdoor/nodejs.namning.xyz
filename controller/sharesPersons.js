@@ -1,10 +1,10 @@
 const { json } = require('express')
 const SharesPersonsModel = require('../models/sharesPersons')
-const ShaersPersonsModel = require('../models/sharesPersons')
+//const SharesPersonsModel = require('../models/sharesPersons')
 
 exports.findAllSharePerson = async (req, res, next) => {
-  console.log(req.body.share_id)
-  await ShaersPersonsModel.findAllSharePerson(req.body.share_id)
+  //console.log(req.body.share_id)
+  await SharesPersonsModel.findAllSharePerson(req.body.share_id)
     .then(([row]) => res.json(row))
     .catch((error) => { console.log(error) })
 }
@@ -12,7 +12,7 @@ exports.findAllSharePerson = async (req, res, next) => {
 exports.editSharePerson = async (req, res, next) => {
   console.log(req.body.person_id, req.body.shares_persons_id)
 
-  await ShaersPersonsModel.updatePerson(req.body.person_id, req.body.shares_persons_id)
+  await SharesPersonsModel.updatePerson(req.body.person_id, req.body.shares_persons_id)
     .then((row) => {
       //console.log(row)      
       res.status(201).json(row)
@@ -38,8 +38,29 @@ exports.editInterest = async (req, res, next) => {
 }
 
 exports.setLocker = async(req, res, next)=>{
-  await ShaersPersonsModel.setLocker(req.body.shares_persons_id)
+  await SharesPersonsModel.setLocker(req.body.shares_persons_id)
     .then(()=>res.status(201).json({"message":"record complete"}))
+    .catch((error)=>console.log(error))
+}
+
+exports.updateComment = async(req, res, next)=>{
+  await SharesPersonsModel.updateCommentBySharesPersonsId(req.body)
+  .then(()=>res.status(201).json({"message":"record complete"}))
+  .catch((error)=>console.log(error))
+}
+
+exports.getSharePersonByDateWithNotPaid = async(req, res, next)=>{
+  //console.log(req.body)
+  await SharesPersonsModel.getSharePersonByDateWithNotPaid(req.body)
+    .then(([row])=>{
+      //console.log(row)
+      res.json(row)})
+    .catch((error)=>console.log(error))
+}
+
+exports.getShareOpenByCustomer = async(req,res,next)=>{
+  await SharesPersonsModel.getShareOpenByCustomer(req.body)
+    .then(([row])=>res.json(row))
     .catch((error)=>console.log(error))
 }
 

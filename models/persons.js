@@ -37,9 +37,9 @@ class PersonsModel{
     return db.query("SELECT COLUMN_TYPE as 'enum' FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'namningx_share' AND TABLE_NAME = 'bank' AND COLUMN_NAME = 'bank';");
   }
 
-  // static findAdmin(){
-  //   return db.query("SELECT * FROM persons WHERE admin = ?",[1]);
-  // }
+  static findAdmin(){
+    return db.query("SELECT * FROM persons WHERE admin = ?",[1]);
+  }
 
   static adminUnset(){
     return db.query('UPDATE persons SET admin = 0  WHERE admin = 1')

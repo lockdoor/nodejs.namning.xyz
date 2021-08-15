@@ -10,7 +10,7 @@ class SharesPersonsModel{
     return db.execute(
       `SELECT tb1.shares_persons_id, tb1.share_id, tb2.admin,
         tb1.person_id, tb1.share_date, tb1.sequence, tb2.nickname,
-        tb1.interest, tb1.locker
+        tb1.interest, tb1.locker, tb1.comment
         FROM shares_persons as tb1
         LEFT JOIN persons as tb2
         ON tb1.person_id = tb2.person_id
@@ -40,6 +40,37 @@ class SharesPersonsModel{
   static setLocker(shares_persons_id){
     return db.query("UPDATE shares_persons SET locker = !locker WHERE shares_persons_id = ?",[shares_persons_id])
   }
+
+  static removeByShareModelUpdate(shareModel){
+    return db.query("DELETE FROM shares_persons WHERE share_id=?",[shareModel.share_id])
+  }
+
+  static updateDateByShareIdAndSequence(date_run, shares_id, sequence){
+    return db.query("UPDATE shares_persons SET share_date = ? WHERE share_id = ? AND sequence = ?",[date_run, shares_id, sequence])
+  }
+
+  static updateCommentBySharesPersonsId(shares_persons){
+    return db.query("UPDATE shares_persons SET comment=? WHERE shares_persons_id=?",
+      [shares_persons.comment, shares_persons.shares_persons_id])
+  }
+
+  static getSharePersonByDateWithNotPaid(shareModel){
+    return db.query(`SELECT s.*,(SELECT COUNT(paid) FROM transactions AS t WHERE t.date=s.shares_persons_id AND t.paid=0) AS not_paid
+    FROM shares_persons AS s WHERE s.share_id = ?;`,[shareModel.share_id])
+  }
+
+  static getShareOpenByCustomer(person){
+    return db.query(
+      `SELECT sp.*, p.nickname, s.name AS share_name
+      FROM shares_persons AS sp 
+      LEFT JOIN persons AS p ON sp.person_id=p.person_id 
+      LEFT JOIN shares AS s ON sp.share_id=s.share_id
+      WHERE sp.person_id = ?`,[person.person_id])
+  }
+
+  
+
+  
   
 }
 
