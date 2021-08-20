@@ -25,10 +25,16 @@ class SharesModel{
     return db.query(`UPDATE shares SET is_open=!is_open WHERE share_id=?`,[shareModel.share_id])
   }
   static findAllShare(){
-    return db.execute('SELECT * FROM shares WHERE is_open=1')
+    return db.execute(`SELECT s.*, sp.share_date AS date_end
+    FROM shares AS s 
+    LEFT JOIN shares_persons AS sp ON s.share_id=sp.share_id
+    WHERE  is_open=1 AND s.amount=sp.sequence`)
   }
   static findAllShareNoOpen(){
-    return db.execute('SELECT * FROM shares WHERE is_open=0')
+    return db.execute(`SELECT s.*, sp.share_date AS date_end
+    FROM shares AS s 
+    LEFT JOIN shares_persons AS sp ON s.share_id=sp.share_id
+    WHERE  is_open=0 AND s.amount=sp.sequence`)
   }
 
   static updateShare(shareModel){

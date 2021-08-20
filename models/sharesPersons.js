@@ -61,11 +61,15 @@ class SharesPersonsModel{
 
   static getShareOpenByCustomer(person){
     return db.query(
-      `SELECT sp.*, p.nickname, s.name AS share_name
-      FROM shares_persons AS sp 
-      LEFT JOIN persons AS p ON sp.person_id=p.person_id 
-      LEFT JOIN shares AS s ON sp.share_id=s.share_id
-      WHERE sp.person_id = ?`,[person.person_id])
+      `SELECT sp.*, p.nickname, s.name AS share_name, s.share_type, 
+      (SELECT COUNT(t1.paid) 
+       FROM transactions AS t1
+        LEFT JOIN shares_persons AS sp1 ON t1.share_person_id=sp1.shares_persons_id
+       WHERE t1.paid=1 AND sp1.shares_persons_id=sp.shares_persons_id) AS total_paid
+    FROM shares_persons AS sp 
+    LEFT JOIN persons AS p ON sp.person_id=p.person_id 
+    LEFT JOIN shares AS s ON sp.share_id=s.share_id      
+    WHERE sp.person_id=? AND s.is_open=1 `,[person.person_id])
   }
 
   
