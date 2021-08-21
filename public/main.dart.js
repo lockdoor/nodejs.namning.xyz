@@ -11466,14 +11466,14 @@ Oq:function Oq(){},
 QO:function QO(){},
 aqR:function(){var s=null
 return new X.jh(s,"\u0e1a\u0e34\u0e14",s,s,s,s,s,s,s,s,s,s,s,!0,!1,!0,s)},
-z2:function(a4){var s,r,q,p=null,o="share_id",n="interest_fix",m="first_bid",l="first_receive",k="last_receive",j=J.aE(a4),i=j.h(a4,o)==null?p:j.h(a4,o),h=j.h(a4,"share_type"),g=j.h(a4,"name"),f=j.h(a4,"fee")==null?p:j.h(a4,"fee"),e=P.Ft(j.h(a4,"date_run")),d=j.h(a4,"principle"),c=j.h(a4,n)==null?p:j.h(a4,n),b=j.h(a4,"amount"),a=j.h(a4,"pay")==null?p:j.h(a4,"pay"),a0=j.h(a4,"days"),a1=j.h(a4,m)==null?p:j.h(a4,m),a2=j.h(a4,"bid")==null?p:j.h(a4,"bid"),a3=j.h(a4,"no_bid")==null?p:j.h(a4,"no_bid")
-if(J.e(j.h(a4,l),1))s=!0
-else s=J.e(j.h(a4,l),!0)&&!0
-if(J.e(j.h(a4,k),1))r=!0
-else r=J.e(j.h(a4,k),!0)&&!0
-if(J.e(j.h(a4,"is_open"),1))q=!0
-else q=J.e(j.h(a4,"is_open"),!0)&&!0
-return new X.jh(i,h,g,f,e,d,c,b,a,a0,a1,a2,a3,s,r,q,P.Ft(j.h(a4,"date_end")))},
+z2:function(a5){var s,r,q,p=null,o="share_id",n="interest_fix",m="first_bid",l="first_receive",k="last_receive",j="date_end",i=J.aE(a5),h=i.h(a5,o)==null?p:i.h(a5,o),g=i.h(a5,"share_type"),f=i.h(a5,"name"),e=i.h(a5,"fee")==null?p:i.h(a5,"fee"),d=P.Ft(i.h(a5,"date_run")),c=i.h(a5,"principle"),b=i.h(a5,n)==null?p:i.h(a5,n),a=i.h(a5,"amount"),a0=i.h(a5,"pay")==null?p:i.h(a5,"pay"),a1=i.h(a5,"days"),a2=i.h(a5,m)==null?p:i.h(a5,m),a3=i.h(a5,"bid")==null?p:i.h(a5,"bid"),a4=i.h(a5,"no_bid")==null?p:i.h(a5,"no_bid")
+if(J.e(i.h(a5,l),1))s=!0
+else s=J.e(i.h(a5,l),!0)&&!0
+if(J.e(i.h(a5,k),1))r=!0
+else r=J.e(i.h(a5,k),!0)&&!0
+if(J.e(i.h(a5,"is_open"),1))q=!0
+else q=J.e(i.h(a5,"is_open"),!0)&&!0
+return new X.jh(h,g,f,e,d,c,b,a,a0,a1,a2,a3,a4,s,r,q,i.h(a5,j)==null?p:P.Ft(i.h(a5,j)))},
 a60:function(a){var s=0,r=P.F(t.z),q,p,o,n,m
 var $async$a60=P.B(function(b,c){if(b===1)return P.C(c,r)
 while(true)switch(s){case 0:p=t.N
